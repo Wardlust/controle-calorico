@@ -150,11 +150,33 @@ async function carregarRefeicoes() {
 // =========================================================
 
 document.addEventListener('DOMContentLoaded', () => {
-    // Assume que o botão de Enviar no HTML tem um onclick="importarExcel()"
-    // OU que o botão tenha um ID específico (ex: 'btnEnviar') e essa linha o anexa
+ 
     const btnEnviar = document.querySelector('button[onclick="enviarArquivo()"]'); 
     
-    // 🚨 CRÍTICO: Inicia o carregamento da lista ao abrir a página
+document.addEventListener('DOMContentLoaded', () => {
+
+    const enviarBtn = document.getElementById('enviar-btn');
+    
+    if (enviarBtn) {
+        enviarBtn.addEventListener('click', (event) => {
+
+            event.preventDefault(); 
+
+            importarExcel(); 
+        });
+    }
+
+    // 3. INICIA A FUNÇÃO DE LISTAGEM, se ela existir e estiver no escopo.
+    // listagemInicial(); 
+});
+
+
+
+
+
+
+    
     carregarRefeicoes();
 
 });
+
