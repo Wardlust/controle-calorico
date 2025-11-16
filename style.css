@@ -1,0 +1,100 @@
+/* Estilos Gerais e Fundo */
+body {
+    font-family: Arial, sans-serif;
+    background: #f5f5f5; /* Fundo mais suave */
+    padding: 20px;
+}
+
+/* 1. Destaque do Cabeçalho (Título principal) */
+h1 {
+    text-align: center;
+    margin-bottom: 50px;
+    font-size: 2.8em; /* Aumenta o tamanho */
+    font-weight: 800; /* Super destacado */
+    color: #007bff; /* Cor azul forte */
+    letter-spacing: 1.5px;
+    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.1); /* Sombra sutil */
+}
+
+/* Estilo para o Subtítulo da Associação */
+.subtitulo {
+    text-align: center;
+    font-size: 1.2em; /* Tamanho um pouco menor que o título principal */
+    font-weight: 500; /* Levemente destacado */
+    color: #6c757d; /* Cor cinza suave para subtítulo */
+    margin-top: -30px; /* Puxa para perto do H1 */
+    margin-bottom: 40px;
+}
+
+/* Estilo para Títulos Secundários (h2 dentro do card) */
+.card h2 {
+    margin-bottom: 20px;
+    font-size: 1.5em;
+    color: #333;
+}
+
+/* Estilo principal do card */
+.card {
+    background: white;
+    padding: 30px;
+    border-radius: 12px; /* Mais arredondado */
+    width: 90%; /* Ajusta a largura */
+    max-width: 700px; /* Limita a largura máxima */
+    margin: 20px auto;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1); /* Sombra mais profunda */
+}
+
+/* 2. Estilização da Lista Suspensa (Seletor de Dia) */
+#seletorDia {
+    padding: 12px 20px; /* Aumenta o tamanho do clique */
+    font-size: 1.2em; /* Fonte maior */
+    border: 3px solid #28a745; /* Borda verde para destaque (Cor de 'saúde') */
+    border-radius: 8px;
+    background-color: #e9f7ef; /* Fundo levemente verde */
+    color: #28a745;
+    cursor: pointer;
+    width: 100%; /* Ocupa a largura total do container */
+    margin-bottom: 25px; 
+    appearance: none; /* Remove estilo padrão do navegador */
+}
+
+/* Estilo para a lista de Refeições (Container listaRefeicoes) */
+#listaRefeicoes {
+    margin-top: 20px;
+}
+
+/* 3. Estilização dos Cartões de Refeição (Café, Almoço, etc.) */
+.refeicao-card {
+    background-color: #f8f9fa; /* Fundo cinza claro */
+    padding: 15px;
+    margin-bottom: 15px;
+    border-radius: 8px;
+    border-left: 5px solid #007bff; /* Linha azul lateral para destaque da refeição */
+    box-shadow: 0 1px 4px rgba(0,0,0,0.05);
+}
+
+.refeicao-card h4 {
+    font-size: 1.3em;
+    color: #007bff; /* Título da Refeição em azul */
+    margin-bottom: 10px;
+}
+
+/* Estilo para a lista de itens */
+.refeicao-card ul {
+    list-style-type: none;
+    padding-left: 0;
+}
+
+/* Estilo para cada item de alimento (li) */
+.refeicao-card li {
+    padding: 8px 0;
+    margin-bottom: 4px;
+    border-bottom: 1px dashed #ddd; /* Linha separadora sutil */
+    font-size: 0.95em;
+}
+
+/* Destaque para o nome do Item */
+.refeicao-card strong {
+    color: #333;
+    font-weight: 600;
+}
