@@ -1,8 +1,9 @@
 // script.js
 
+// 🚨 URL CORRIGIDA: Aponta para o Backend no Render (o que está verde)
+const BACKEND_URL = 'https://calorias-api-wardlust.onrender.com';
+
 const mensagem = document.getElementById("mensagem");
-// 🚨 Nota: Garanta que o seu input de arquivo no HTML tenha o ID "arquivoExcel"
-const input = document.getElementById("arquivoExcel"); 
 const listaRefeicoes = document.getElementById("listaRefeicoes");
 const seletorDia = document.getElementById("seletorDia");
 let dadosSemana = []; // Variável global para armazenar os dados
@@ -12,37 +13,40 @@ let dadosSemana = []; // Variável global para armazenar os dados
 // =========================================================
 
 async function importarExcel() {
-    // 1. O CÓDIGO INTEIRO DA FUNÇÃO COMEÇA AQUI
+    // 🚨 AVISO: Usando 'file-input', certifique-se de que o input de arquivo no seu HTML
+    // TEM O ID 'file-input' para que isso funcione.
+    const fileInput = document.getElementById('file-input');
     
-    try {
-        // CÓDIGO QUE PODE FALHAR (como o fetch)
-        const fileInput = document.getElementById('file-input');
-        const formData = new FormData();
-        formData.append('excelFile', fileInput.files[0]);
+    if (!fileInput || !fileInput.files || fileInput.files.length === 0) {
+        alert('Por favor, selecione um arquivo Excel.');
+        return;
+    }
 
-        // 🚨 URL CORRIGIDA
-        const resposta = await fetch("https://calorias-api-wardlust.onrender.com/api/refeicoes/importar-excel", {
+    const formData = new FormData();
+    formData.append('excelFile', fileInput.files[0]);
+
+    try {
+        const resposta = await fetch(`${BACKEND_URL}/api/refeicoes/importar-excel`, {
             method: "POST",
             body: formData,
         });
 
-        // Lógica de sucesso (Se o Status for 200, 201...)
+        // Lógica de sucesso
         if (resposta.ok) {
-            alert('Dados importados com sucesso!');
-            // Se houver uma função para recarregar a listagem, chame-a aqui
-            // carregarDados(); 
+            // Usa window.location.reload() para garantir que a listagem carregue os novos dados
+            alert('Dados importados com sucesso! Recarregando a listagem...');
+            window.location.reload(); 
         } else {
             const erro = await resposta.json();
-            alert('Erro ao importar dados: ' + erro.erro);
+            console.error('Erro de servidor na importação:', erro);
+            alert('Erro ao importar dados: ' + (erro.erro || 'Erro desconhecido. Verifique o console.'));
         }
 
     } catch (error) {
-        // 2. O BLOCO CATCH (OBRIGATÓRIO) ESTÁ AQUI
+        // Bloco CATCH
         console.error('Erro de rede ou na requisição:', error);
-        alert('Erro ao conectar com o servidor ou problema interno. Verifique o console.');
+        alert('Erro ao conectar com o servidor. Verifique o console.');
     }
-
-    // 3. A FUNÇÃO TERMINA AQUI
 }
 
 
@@ -52,12 +56,10 @@ async function importarExcel() {
 
 // Função para exibir APENAS o dia selecionado
 function exibirDiaSelecionado(diaSelecionado) {
-    // Esconde todos os containers de dia
     document.querySelectorAll('.dia-container').forEach(div => {
         div.style.display = 'none';
     });
 
-    // Exibe o container do dia selecionado
     const divDia = document.getElementById(`dia-${diaSelecionado}`);
     if (divDia) {
         divDia.style.display = 'block';
@@ -72,8 +74,8 @@ async function carregarRefeicoes() {
     dadosSemana = []; // Reseta a variável global
 
     try {
-        // Busca os dados agrupados por Dia e Refeição com itens detalhados
-        const resposta = await fetch("http://127.0.0.1:3000/api/refeicoes");
+        // 🚨 URL CORRIGIDA AQUI TAMBÉM
+        const resposta = await fetch(`${BACKEND_URL}/api/refeicoes`);
         const dados = await resposta.json();
 
         if (!dados || dados.length === 0) {
@@ -91,7 +93,6 @@ async function carregarRefeicoes() {
             const diaNome = diaData.dia;
             if (index === 0) primeiroDia = diaNome;
             
-            // Adiciona a opção no seletor
             htmlDias += `<option value="${diaNome}">${diaNome}</option>`;
         });
 
@@ -101,7 +102,6 @@ async function carregarRefeicoes() {
         let htmlConteudo = "";
         
         dadosSemana.forEach(diaData => {
-            // Cria um container para o dia
             htmlConteudo += `<div id="dia-${diaData.dia}" class="dia-container" style="display: none;">`;
             
             diaData.refeicoes.forEach(refeicao => {
@@ -133,43 +133,33 @@ async function carregarRefeicoes() {
 
     } catch (erro) {
         console.error("Erro ao carregar lista de refeições:", erro);
-        listaRefeicoes.innerHTML = "<p>Erro ao carregar dados. Verifique a conexão com o servidor e a API do Firestore.</p>";
+        listaRefeicoes.innerHTML = "<p>Erro ao carregar dados. Verifique a conexão com o servidor.</p>";
     }
 }
 
 // =========================================================
-// 3. INICIALIZAÇÃO E EVENTOS
+// 3. INICIALIZAÇÃO E EVENTOS (Limpeza e Consolidação)
 // =========================================================
 
 document.addEventListener('DOMContentLoaded', () => {
- 
-    const btnEnviar = document.querySelector('button[onclick="enviarArquivo()"]'); 
-    
-document.addEventListener('DOMContentLoaded', () => {
 
+    // 1. Conecta o seletor de dias à função de exibição
+    seletorDia.addEventListener('change', (event) => {
+        exibirDiaSelecionado(event.target.value);
+    });
+
+    // 2. Conecta o botão de envio à função de importação
+    // Assume que o botão agora tem o ID 'enviar-btn' (conforme correção anterior)
     const enviarBtn = document.getElementById('enviar-btn');
     
     if (enviarBtn) {
         enviarBtn.addEventListener('click', (event) => {
-
             event.preventDefault(); 
-
             importarExcel(); 
         });
     }
 
-    // 3. INICIA A FUNÇÃO DE LISTAGEM, se ela existir e estiver no escopo.
-    // listagemInicial(); 
-});
-
-
-
-
-
-
-    
+    // 3. Inicia o carregamento da listagem de refeições
     carregarRefeicoes();
-
 });
-
 
