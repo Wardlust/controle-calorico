@@ -12,45 +12,37 @@ let dadosSemana = []; // Variável global para armazenar os dados
 // =========================================================
 
 async function importarExcel() {
-    // Limpa mensagens anteriores
-    mensagem.textContent = "Importando arquivo...";
-    mensagem.className = "text-info";
+    // 1. O CÓDIGO INTEIRO DA FUNÇÃO COMEÇA AQUI
     
-    // Verifica se um arquivo foi selecionado
-    if (!input.files || input.files.length === 0) {
-        mensagem.className = "text-danger";
-        mensagem.textContent = "Selecione um arquivo para importar.";
-        return;
-    }
-
-    const arquivo = input.files[0];
-    const formData = new FormData();
-    formData.append("arquivo", arquivo);
-
     try {
-    const resposta = await fetch("https://calorias-api-wardlust.onrender.com/api/refeicoes/importar-excel", {
-        method: "POST",
-        body: formData,
-    });
-}
+        // CÓDIGO QUE PODE FALHAR (como o fetch)
+        const fileInput = document.getElementById('file-input');
+        const formData = new FormData();
+        formData.append('excelFile', fileInput.files[0]);
 
+        // 🚨 URL CORRIGIDA
+        const resposta = await fetch("https://calorias-api-wardlust.onrender.com/api/refeicoes/importar-excel", {
+            method: "POST",
+            body: formData,
+        });
+
+        // Lógica de sucesso (Se o Status for 200, 201...)
         if (resposta.ok) {
-            const resultado = await resposta.json();
-            mensagem.className = "text-success";
-            mensagem.textContent = `${resultado.mensagem} (Total: ${resultado.total})`;
-            
-            // 🚨 CRÍTICO: Atualiza a lista após a importação bem-sucedida
-            carregarRefeicoes(); 
+            alert('Dados importados com sucesso!');
+            // Se houver uma função para recarregar a listagem, chame-a aqui
+            // carregarDados(); 
         } else {
             const erro = await resposta.json();
-            mensagem.className = "text-danger";
-            mensagem.textContent = `Erro ao importar o arquivo: ${erro.erro || 'Erro desconhecido.'}`;
+            alert('Erro ao importar dados: ' + erro.erro);
         }
-    } catch (erro) {
-        console.error("Erro na requisição de importação:", erro);
-        mensagem.className = "text-danger";
-        mensagem.textContent = "Erro ao conectar com o servidor. Verifique o console.";
+
+    } catch (error) {
+        // 2. O BLOCO CATCH (OBRIGATÓRIO) ESTÁ AQUI
+        console.error('Erro de rede ou na requisição:', error);
+        alert('Erro ao conectar com o servidor ou problema interno. Verifique o console.');
     }
+
+    // 3. A FUNÇÃO TERMINA AQUI
 }
 
 
@@ -179,4 +171,5 @@ document.addEventListener('DOMContentLoaded', () => {
     carregarRefeicoes();
 
 });
+
 
