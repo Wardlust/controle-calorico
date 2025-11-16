@@ -28,10 +28,11 @@ async function importarExcel() {
     formData.append("arquivo", arquivo);
 
     try {
-        const resposta = await fetch("http://127.0.0.1:3000/api/refeicoes/importar-excel", {
-            method: "POST",
-            body: formData,
-        });
+    const resposta = await fetch("https://calorias-api-wardlust.onrender.com/api/refeicoes/importar-excel", {
+        method: "POST",
+        body: formData,
+    });
+}
 
         if (resposta.ok) {
             const resultado = await resposta.json();
@@ -155,4 +156,5 @@ document.addEventListener('DOMContentLoaded', () => {
     
     // 🚨 CRÍTICO: Inicia o carregamento da lista ao abrir a página
     carregarRefeicoes();
+
 });
