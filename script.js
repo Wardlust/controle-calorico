@@ -15,7 +15,7 @@ let dadosSemana = []; // Variável global para armazenar os dados
 async function importarExcel() {
     // 🚨 AVISO: Usando 'file-input', certifique-se de que o input de arquivo no seu HTML
     // TEM O ID 'file-input' para que isso funcione.
-    const fileInput = document.getElementById('file-input');
+    const fileInput = document.getElementById('arquivoExcel');
     
     if (!fileInput || !fileInput.files || fileInput.files.length === 0) {
         alert('Por favor, selecione um arquivo Excel.');
@@ -162,4 +162,5 @@ document.addEventListener('DOMContentLoaded', () => {
     // 3. Inicia o carregamento da listagem de refeições
     carregarRefeicoes();
 });
+
 
