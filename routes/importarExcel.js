@@ -28,7 +28,7 @@ function parseCalorias(texto) {
 }
 
 // Rota para importar o Excel
-router.post("/importar-excel", upload.single("arquivo"), async (req, res) => {
+router.post("/importar-excel", upload.single("excelFile"), async (req, res) => {
   try {
     if (!req.file) {
       return res.status(400).json({ erro: "Envie um arquivo Excel." });
@@ -88,5 +88,6 @@ router.post("/importar-excel", upload.single("arquivo"), async (req, res) => {
     res.status(500).json({ erro: "Erro ao importar o arquivo." });
   }
 });
+
 
 module.exports = router;
